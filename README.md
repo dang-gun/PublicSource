@@ -1,4 +1,5 @@
 # Public Source
+A repository for distributing projects intended solely for public use, not for version control purposes. \
 버전 관리 목적이 아닌 공개만을 목적으로 한 프로젝트를 배포하기위한 저장소입니다.
 
 ## How to download a part (부분 다운로드 방법)
