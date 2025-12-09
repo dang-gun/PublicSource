@@ -4,7 +4,7 @@
 
 프로젝트 설명 : [[AI] 바이브 코딩(Vibe Coding)으로 게임을 만들어보았다.(Unity)](https://blog.danggun.net/461316)
 
-[게임 화면]()
+![게임 화면](https://github.com/dang-gun/PublicSource/blob/main/NinjaAppeared/ProjectFiles/NinjaAppeared001.png)
 
   
 <br />
