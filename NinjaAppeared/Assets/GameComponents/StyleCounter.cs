@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -71,14 +71,14 @@ public class StyleCounter : MonoBehaviour
         inst._maxLevel = Mathf.Max(inst._maxLevel, inst.Level);
         inst.RefreshUI();
 
-        // ½ºÅ¸ÀÏ ´©Àû Á¡¼ö ±ÔÄ¢: ½ºÅ¸ÀÏ ·¹º§ÀÌ2 ÀÌ»óÀÌ¸é +1
+        // ìŠ¤íƒ€ì¼ ëˆ„ì  ì ìˆ˜ ê·œì¹™: ìŠ¤íƒ€ì¼ ë ˆë²¨ì´2 ì´ìƒì´ë©´ +1
         if (inst.Level >= 2)
         {
             try { GameStats.IncrementStyleScore(); } catch { }
         }
 
-        // ÃÖ´ë ½ºÅ¸ÀÏ Ä«¿îÆ®°¡ 5ÀÇ ¹è¼ö¿¡ µµ´ÞÇÒ ¶§¸¶´Ù ÇÇ¹ö °ÔÀÌÁö +5
-        // (»õ·Î¿î ÃÖ´ëÄ¡·Î °»½ÅµÈ °æ¿ì¿¡¸¸ 1È¸ °¡»ê)
+        // ìµœëŒ€ ìŠ¤íƒ€ì¼ ì¹´ìš´íŠ¸ê°€ 5ì˜ ë°°ìˆ˜ì— ë„ë‹¬í•  ë•Œë§ˆë‹¤ í”¼ë²„ ê²Œì´ì§€ +5
+        // (ìƒˆë¡œìš´ ìµœëŒ€ì¹˜ë¡œ ê°±ì‹ ëœ ê²½ìš°ì—ë§Œ 1íšŒ ê°€ì‚°)
         if (inst._maxCount != prevMaxCount && inst._maxCount > 0 && inst._maxCount % CountPerLevel == 0)
         {
             try { FeverTimeModel.Instance.AddScore(5); } catch { }
@@ -94,7 +94,7 @@ public class StyleCounter : MonoBehaviour
     {
         var inst = Instance ?? Ensure();
         if (0 < inst.Count)
-        {//½ºÅ¸ÀÏÀº 0¹Ì¸¸ÀÌ µÉ ¼ö ¾ø´Ù.
+        {//ìŠ¤íƒ€ì¼ì€ 0ë¯¸ë§Œì´ ë  ìˆ˜ ì—†ë‹¤.
             inst.Count -= 1;
         }
 
@@ -182,7 +182,7 @@ public class StyleCounter : MonoBehaviour
 
     public static string GetLevelDisplayText(int level)
     {
-        if (level <= 0) return string.Empty; //0·¹º§: Ç¥½Ã ¾øÀ½
+        if (level <= 0) return string.Empty; //0ë ˆë²¨: í‘œì‹œ ì—†ìŒ
         switch (level)
         {
             case 1: return "D";
@@ -193,7 +193,7 @@ public class StyleCounter : MonoBehaviour
             case 6: return "SS";
             case 7: return "SSS";
             default:
-                //8·¹º§ ÀÌ»ó: S+(level-4)
+                //8ë ˆë²¨ ì´ìƒ: S+(level-4)
                 return "S+" + (level - 4).ToString();
         }
     }

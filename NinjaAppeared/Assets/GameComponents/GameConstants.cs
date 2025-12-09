@@ -58,6 +58,11 @@ public static class GameConstants
     //public const float AoeKillRadius = 4f;
 
 
+    /// <summary>
+    /// 게임 타이머 기본 시작 시간(초)
+    /// </summary>
+    public const float DefaultTimerStartSeconds = 30f;
+
     #region 콤보 UI
     /// <summary>
     /// 콤보 팝업의 월드 오프셋 X (적 기준, 월드 단위)
@@ -206,4 +211,5 @@ public static class GameConstants
 
     #endregion
 
+    
 }

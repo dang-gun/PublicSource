@@ -86,6 +86,8 @@ public class GameOverSkipHandler : MonoBehaviour, IPointerDownHandler, IPointerU
         try { GameStats.Reset(); } catch { }
         try { StyleCounter.ResetToZero(); } catch { }
         try { if (ComboController.Instance != null) ComboController.Instance.BreakCombo(true); } catch { } // 강제 초기화
+        // Reset fever immediately as well
+        try { FeverTimeModel.Instance.Reset(); } catch { }
 
         // Reload current scene
         var scene = SceneManager.GetActiveScene();

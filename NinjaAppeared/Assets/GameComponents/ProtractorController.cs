@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -11,7 +11,7 @@ public class ProtractorController : MonoBehaviour
     public float radius = 2f; // base radius, final size uses GameConstants.ProtractorScale
     [Range(8, 128)] public int segments = 36;
     /// <summary>
-    /// °¢µµ±â µÎ²²
+    /// ê°ë„ê¸° ë‘ê»˜
     /// </summary>
     public float lineWidth = 0.05f;
     public Color arcColor = Color.yellow;
@@ -20,7 +20,7 @@ public class ProtractorController : MonoBehaviour
 
     [Header("Layout")]
     /// <summary>
-    /// °¢µµ±â ½Ã°¢Àû ¿ÀÇÁ¼Â (·ÎÄÃ °ø°£)
+    /// ê°ë„ê¸° ì‹œê°ì  ì˜¤í”„ì…‹ (ë¡œì»¬ ê³µê°„)
     /// </summary> 
     public Vector3 localOffset = new Vector3(0f, 0f, 0f);
 
@@ -65,12 +65,12 @@ public class ProtractorController : MonoBehaviour
     [Tooltip("KnifeWork sprites sets provided by GameMainController for hit VFX.")]
     public List<KnifeWork_ResourcesDataModel> knifeWorkResources;
     public float knifeWorkFrameRate = 24f;
-    [Tooltip("Ä®Áú È¿°ú È¸Àü °¢µµ ¹üÀ§(µµ). ÃÖ¼Ò~ÃÖ´ë »çÀÌ¿¡¼­ ·£´ı Àû¿ë")]
+    [Tooltip("ì¹¼ì§ˆ íš¨ê³¼ íšŒì „ ê°ë„ ë²”ìœ„(ë„). ìµœì†Œ~ìµœëŒ€ ì‚¬ì´ì—ì„œ ëœë¤ ì ìš©")]
     public float knifeWorkRotationMin = 0f;
     public float knifeWorkRotationMax = 360f;
 
     [Header("Tilt")]
-    [Tooltip("´ÑÀÚ°¡ ¸ØÃá »óÅÂ¿¡¼­ ³ôÀÌ¿¡ µû¶ó °¢µµ±â¸¦ ¾Æ·¡·Î ±â¿ïÀÔ´Ï´Ù (ÇÏ´Ü=0¡Æ, »ó´Ü=ÃÖ´ëµµ).")]
+    [Tooltip("ë‹Œìê°€ ë©ˆì¶˜ ìƒíƒœì—ì„œ ë†’ì´ì— ë”°ë¼ ê°ë„ê¸°ë¥¼ ì•„ë˜ë¡œ ê¸°ìš¸ì…ë‹ˆë‹¤ (í•˜ë‹¨=0Â°, ìƒë‹¨=ìµœëŒ€ë„).")]
     public bool tiltByHeight = true;
     [Range(0f, 90f)] public float tiltMaxDegrees = 90f;
 
@@ -79,23 +79,23 @@ public class ProtractorController : MonoBehaviour
     public int minSortingOrder = 21;
 
     [Header("Trajectory Preview")]
-    [Tooltip("°¢µµ±â¿¡ µû¶ó ¿¹»ó Á¡ÇÁ ±ËÀû(Æ÷¹°¼±)À» ¹Ì¸® ±×¸³´Ï´Ù.")]
+    [Tooltip("ê°ë„ê¸°ì— ë”°ë¼ ì˜ˆìƒ ì í”„ ê¶¤ì (í¬ë¬¼ì„ )ì„ ë¯¸ë¦¬ ê·¸ë¦½ë‹ˆë‹¤.")]
     public bool showTrajectory = true;
-    [Tooltip("±ËÀû »ùÇÃ °³¼ö (ÃÖ´ë ¼¼±×¸ÕÆ® ¼ö)")]
+    [Tooltip("ê¶¤ì  ìƒ˜í”Œ ê°œìˆ˜ (ìµœëŒ€ ì„¸ê·¸ë¨¼íŠ¸ ìˆ˜)")]
     [Range(4, 256)] public int trajectorySegments = 40;
-    [Tooltip("½Ã¹Ä·¹ÀÌ¼Ç ½Ã°£ °£°İ(ÃÊ). ¼¼±×¸ÕÆ® * ÀÌ °ª ¸¸Å­ ÃÖ´ë ½Ã°£À» ¿¹Ãø")]
+    [Tooltip("ì‹œë®¬ë ˆì´ì…˜ ì‹œê°„ ê°„ê²©(ì´ˆ). ì„¸ê·¸ë¨¼íŠ¸ * ì´ ê°’ ë§Œí¼ ìµœëŒ€ ì‹œê°„ì„ ì˜ˆì¸¡")]
     public float trajectoryTimeStep = 0.05f;
-    [Tooltip("¿¹Ãø ±ËÀû ÃÖ´ë ½Ã°£(ÃÊ).0ÀÌ¸é ¼¼±×¸ÕÆ® ±â¹İ")]
+    [Tooltip("ì˜ˆì¸¡ ê¶¤ì  ìµœëŒ€ ì‹œê°„(ì´ˆ).0ì´ë©´ ì„¸ê·¸ë¨¼íŠ¸ ê¸°ë°˜")]
     public float trajectoryMaxTime = 0f;
-    [Tooltip("±ËÀû ¶óÀÎ µÎ²²")] public float trajectoryLineWidth = 0.04f;
+    [Tooltip("ê¶¤ì  ë¼ì¸ ë‘ê»˜")] public float trajectoryLineWidth = 0.04f;
     public Color trajectoryColor = Color.white;
-    [Tooltip("Áö¸é Ãæµ¹ ½Ã »ùÇÃ Á¤Áö ¿©ºÎ")] public bool trajectoryStopOnGround = true;
-    [Tooltip("±ËÀûÀÌ ±×·ÁÁú ¶§ Y Á¡ÇÁ ³ôÀÌ¸¸ Ç¥½Ã (X ÁøÇà °íÁ¤) ºñÈ°¼ºÈ­ ½Ã Á¤»ó Æ÷¹°¼±")]
+    [Tooltip("ì§€ë©´ ì¶©ëŒ ì‹œ ìƒ˜í”Œ ì •ì§€ ì—¬ë¶€")] public bool trajectoryStopOnGround = true;
+    [Tooltip("ê¶¤ì ì´ ê·¸ë ¤ì§ˆ ë•Œ Y ì í”„ ë†’ì´ë§Œ í‘œì‹œ (X ì§„í–‰ ê³ ì •) ë¹„í™œì„±í™” ì‹œ ì •ìƒ í¬ë¬¼ì„ ")]
     public bool trajectoryVerticalOnly = false;
 
     [Header("Fever Time")] public FeverTimeModel feverTime; // Use global singleton instance
     private RectTransform feverBarRect; // Bar2 RectTransform
-    private const float FeverBarMaxWidth = 182f; // UI ¹Ù ÃÖ´ë Æø
+    private const float FeverBarMaxWidth = 182f; // UI ë°” ìµœëŒ€ í­
 
     private LineRenderer arcRenderer;
     private LineRenderer needleRenderer;
@@ -109,10 +109,10 @@ public class ProtractorController : MonoBehaviour
     private Vector3 launchStartPos;
     private bool hasLaunchStart;
     /// <summary>
-    /// ´©Àû ÀÌµ¿ °Å¸®(m)
+    /// ëˆ„ì  ì´ë™ ê±°ë¦¬(m)
     /// </summary>
     private float cumulativeMeters = 0f;
-    // ÀÌ¹ø Á¡ÇÁ(¹ß»ç) µ¿¾È µµ´ŞÇÑ ÃÖ´ë X (¿À¸¥ÂÊÀ¸·Î¸¸ ÁøÇàÇÏ¹Ç·Î °¨¼Ò ¹æÁö¿ë)
+    // ì´ë²ˆ ì í”„(ë°œì‚¬) ë™ì•ˆ ë„ë‹¬í•œ ìµœëŒ€ X (ì˜¤ë¥¸ìª½ìœ¼ë¡œë§Œ ì§„í–‰í•˜ë¯€ë¡œ ê°ì†Œ ë°©ì§€ìš©)
     private float launchMaxX;
     // Fever distance chunk tracking (10m per fever point)
     private int feverDistanceChunkAwarded = 0; // floor(cumulativeDistance/10) already converted to fever points
@@ -157,14 +157,14 @@ public class ProtractorController : MonoBehaviour
         // Trajectory preview object
         var trajObj = new GameObject("ProtractorTrajectory");
         trajObj.transform.SetParent(transform, false);
-        // ÀÌÀü¿¡´Â localOffsetÀ» Àû¿ëÇßÀ¸³ª, ´ÑÀÚ À§Ä¡ ±âÁØÀ¸·Î ¹Ù·Î ½ÃÀÛÇÏµµ·Ï0À¸·Î ¼³Á¤
+        // ì´ì „ì—ëŠ” localOffsetì„ ì ìš©í–ˆìœ¼ë‚˜, ë‹Œì ìœ„ì¹˜ ê¸°ì¤€ìœ¼ë¡œ ë°”ë¡œ ì‹œì‘í•˜ë„ë¡0ìœ¼ë¡œ ì„¤ì •
         trajObj.transform.localPosition = Vector3.zero;
         trajectoryRenderer = trajObj.AddComponent<LineRenderer>();
         SetupLineRenderer(trajectoryRenderer, trajectoryColor);
         trajectoryRenderer.startWidth = trajectoryRenderer.endWidth = trajectoryLineWidth;
-        // ±ËÀûÀº ¿ùµå ÁÂÇ¥·Î Á÷Á¢ °è»êÇÏ¿© À§Ä¡ ¹®Á¦ ÇØ°á
+        // ê¶¤ì ì€ ì›”ë“œ ì¢Œí‘œë¡œ ì§ì ‘ ê³„ì‚°í•˜ì—¬ ìœ„ì¹˜ ë¬¸ì œ í•´ê²°
         trajectoryRenderer.useWorldSpace = true;
-        trajectoryRenderer.enabled = showTrajectory; // ½ÃÀÛ ½Ã Ç¥½Ã »óÅÂ ¹İ¿µ
+        trajectoryRenderer.enabled = showTrajectory; // ì‹œì‘ ì‹œ í‘œì‹œ ìƒíƒœ ë°˜ì˜
 
         // Ground line renderer (world space)
         var groundObj = new GameObject("ProtractorGroundLine");
@@ -186,7 +186,7 @@ public class ProtractorController : MonoBehaviour
         RebuildArc();
         UpdateNeedle();
         UpdateTrajectory();
-        RefreshSorting(); // Á¤·Ä ¿ì¼± Àû¿ëÇØ °¡·ÁÁöÁö ¾Êµµ·Ï
+        RefreshSorting(); // ì •ë ¬ ìš°ì„  ì ìš©í•´ ê°€ë ¤ì§€ì§€ ì•Šë„ë¡
 
         // Init UIs
         InitializeTraveledUI();
@@ -250,7 +250,7 @@ public class ProtractorController : MonoBehaviour
 
         if (launched)
         {
-            // Update distance UI while flying (´©Àû + ÇöÀç ºñÇà°Å¸®)
+            // Update distance UI while flying (ëˆ„ì  + í˜„ì¬ ë¹„í–‰ê±°ë¦¬)
             if (hasLaunchStart)
             {
                 UpdateDistanceDuringFlight();
@@ -284,7 +284,7 @@ public class ProtractorController : MonoBehaviour
 
 
 
-        //ÀÓ½Ã Å×½ºÆ®¿ë
+        //ì„ì‹œ í…ŒìŠ¤íŠ¸ìš©
         //if (Input.GetKeyDown(KeyCode.F4))
         //{
         //    //FeverTimeModel.Instance.AddScore(99);
@@ -292,7 +292,7 @@ public class ProtractorController : MonoBehaviour
         //}
     }
 
-    // ¸ğ¹ÙÀÏ ÅÍÄ¡ ½ÃÀÛÀ» Space ÀÔ·Â°ú µ¿ÀÏÇÏ°Ô Ã³¸®
+    // ëª¨ë°”ì¼ í„°ì¹˜ ì‹œì‘ì„ Space ì…ë ¥ê³¼ ë™ì¼í•˜ê²Œ ì²˜ë¦¬
     private bool TouchLaunchTriggered()
     {
         if (Input.touchCount > 0)
@@ -300,7 +300,7 @@ public class ProtractorController : MonoBehaviour
             var t = Input.GetTouch(0);
             if (t.phase == TouchPhase.Began)
             {
-                // UI À§¿¡¼­ ½ÃÀÛµÈ ÅÍÄ¡´Â ¹«½Ã
+                // UI ìœ„ì—ì„œ ì‹œì‘ëœ í„°ì¹˜ëŠ” ë¬´ì‹œ
                 if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(t.fingerId))
                     return false;
                 return true;
@@ -394,7 +394,7 @@ public class ProtractorController : MonoBehaviour
                     if (needed > 0 && (autoBounceCount % needed) == 0)
                     {
                         StyleCounter.Decrement(); // every4 bounces (2 round trips) => -1
-                                                  //Debug.Log($"[½ºÅ¸ÀÏ Ä«¿îÅÍ1] ÀÚµ¿ °¢µµ±â ÃÖ´ë µµ´Ş·Î ½ºÅ¸ÀÏ -1 (´©Àû ¹Ù¿î½º: {autoBounceCount})");
+                                                  //Debug.Log($"[ìŠ¤íƒ€ì¼ ì¹´ìš´í„°1] ìë™ ê°ë„ê¸° ìµœëŒ€ ë„ë‹¬ë¡œ ìŠ¤íƒ€ì¼ -1 (ëˆ„ì  ë°”ìš´ìŠ¤: {autoBounceCount})");
                     }
                 }
                 autoIncreasing = false;
@@ -409,7 +409,7 @@ public class ProtractorController : MonoBehaviour
                     if (needed > 0 && (autoBounceCount % needed) == 0)
                     {
                         StyleCounter.Decrement(); // every4 bounces (2 round trips) => -1
-                                                  //Debug.Log($"[½ºÅ¸ÀÏ Ä«¿îÅÍ2] ÀÚµ¿ °¢µµ±â ÃÖ´ë µµ´Ş·Î ½ºÅ¸ÀÏ -1 (´©Àû ¹Ù¿î½º: {autoBounceCount})");
+                                                  //Debug.Log($"[ìŠ¤íƒ€ì¼ ì¹´ìš´í„°2] ìë™ ê°ë„ê¸° ìµœëŒ€ ë„ë‹¬ë¡œ ìŠ¤íƒ€ì¼ -1 (ëˆ„ì  ë°”ìš´ìŠ¤: {autoBounceCount})");
                     }
                 }
                 autoIncreasing = true;
@@ -443,10 +443,10 @@ public class ProtractorController : MonoBehaviour
             {
                 StyleCounter.Increment();
             }
-            // µÎ ¹Ù¿î½º°¡ ÇÊ¿äÇØµµ ÀÚµ¿ ¸ğµå¿¡¼­ ½ºÀ§Ä¡ ½Ã Áï½Ã Àû¿ë ¾Êµµ·Ï Áö¿¬
+            // ë‘ ë°”ìš´ìŠ¤ê°€ í•„ìš”í•´ë„ ìë™ ëª¨ë“œì—ì„œ ìŠ¤ìœ„ì¹˜ ì‹œ ì¦‰ì‹œ ì ìš© ì•Šë„ë¡ ì§€ì—°
             //else if (autoBounceCount == needed)
             //{
-            // StyleCounter.Decrement(); // Ç® ¿À½Ç·¹ÀÌ¼Ç µµ´Ş ½Ã ½ºÅ¸ÀÏ -1
+            // StyleCounter.Decrement(); // í’€ ì˜¤ì‹¤ë ˆì´ì…˜ ë„ë‹¬ ì‹œ ìŠ¤íƒ€ì¼ -1
             //}
         }
 
@@ -473,7 +473,7 @@ public class ProtractorController : MonoBehaviour
         // mark start position for measuring distance
         launchStartPos = transform.position;
         hasLaunchStart = true;
-        // ÀÌ¹ø ¹ß»ç Áß ÃÖ´ë X ÃÊ±âÈ­
+        // ì´ë²ˆ ë°œì‚¬ ì¤‘ ìµœëŒ€ X ì´ˆê¸°í™”
         launchMaxX = launchStartPos.x;
         // keep showing current cumulative, not reset to0
         SetDistanceText($"{cumulativeMeters:0} m");
@@ -488,7 +488,7 @@ public class ProtractorController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision == null || collision.collider == null) return;
-        // ¸ÕÀú °°Àº °´Ã¼¿¡¼­ Ã£°í, ¾øÀ¸¸é ºÎ¸ğ¿¡¼­ Ã£´Â´Ù (±¸Á¶ º¯°æ ´ëÀÀ)
+        // ë¨¼ì € ê°™ì€ ê°ì²´ì—ì„œ ì°¾ê³ , ì—†ìœ¼ë©´ ë¶€ëª¨ì—ì„œ ì°¾ëŠ”ë‹¤ (êµ¬ì¡° ë³€ê²½ ëŒ€ì‘)
         var enemy = collision.collider.GetComponent<EnemyControler>();
         if (enemy == null)
         {
@@ -503,7 +503,7 @@ public class ProtractorController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other == null) return;
-        // ¸ÕÀú °°Àº °´Ã¼¿¡¼­ Ã£°í, ¾øÀ¸¸é ºÎ¸ğ¿¡¼­ Ã£´Â´Ù (±¸Á¶ º¯°æ ´ëÀÀ)
+        // ë¨¼ì € ê°™ì€ ê°ì²´ì—ì„œ ì°¾ê³ , ì—†ìœ¼ë©´ ë¶€ëª¨ì—ì„œ ì°¾ëŠ”ë‹¤ (êµ¬ì¡° ë³€ê²½ ëŒ€ì‘)
         var enemy = other.GetComponent<EnemyControler>();
         if (enemy == null)
         {
@@ -517,7 +517,7 @@ public class ProtractorController : MonoBehaviour
 
     private void HandleHitEnemy(EnemyControler enemy)
     {
-        // ÀÌ¹Ì Á×Àº ÀûÀÌ¸é Ã³¸®ÇÏÁö ¾ÊÀ½
+        // ì´ë¯¸ ì£½ì€ ì ì´ë©´ ì²˜ë¦¬í•˜ì§€ ì•ŠìŒ
         if (enemy == null) return;
         if (enemy.IsDead) return;
         var rootState = enemy.GetComponentInParent<EnemyRootState>();
@@ -547,7 +547,7 @@ public class ProtractorController : MonoBehaviour
 
         // Count kill and update UI
         killCount++;
-        feverTime.AddScore(feverTime.ScorePerKill); // Àû Ã³Ä¡ ±â¿©
+        feverTime.AddScore(feverTime.ScorePerKill); // ì  ì²˜ì¹˜ ê¸°ì—¬
         SetKillText(killCount);
 
         // Combo: increment and show popup using ComboController
@@ -569,25 +569,25 @@ public class ProtractorController : MonoBehaviour
         int levelFromStyle = Mathf.Clamp(styleVal / 5, 0, 5);
         int sum = levelFromCombo + levelFromStyle;
         int appliedLevel = (sum <= 0) ? 0 : Mathf.Clamp(sum, 1, 10);
-        //ÀûÀ» Á×ÀÌ¸é ¾àÇÑ Áøµ¿ÀÌ¶óµµ ÀÖ°Ô ÇÏ·Á°í ´Ü°è¸¦10±îÁö ´Ã¸²
-        //±×¿¡ µû¶ó¼­ ÃÖÁ¾ °ª¿¡ +1ÇØÁÜ
+        //ì ì„ ì£½ì´ë©´ ì•½í•œ ì§„ë™ì´ë¼ë„ ìˆê²Œ í•˜ë ¤ê³  ë‹¨ê³„ë¥¼10ê¹Œì§€ ëŠ˜ë¦¼
+        //ê·¸ì— ë”°ë¼ì„œ ìµœì¢… ê°’ì— +1í•´ì¤Œ
         appliedLevel = appliedLevel + 1;
 
-        // µğ¹ö±× ·Î±×: µÎ °ª°ú ÇÕ°è/Àû¿ë·¹º§ Ç¥½Ã (ÇÕÀÌ0ÀÌ¸é Àû¿ë·¹º§0)
+        // ë””ë²„ê·¸ ë¡œê·¸: ë‘ ê°’ê³¼ í•©ê³„/ì ìš©ë ˆë²¨ í‘œì‹œ (í•©ì´0ì´ë©´ ì ìš©ë ˆë²¨0)
         if (GameConstants.DebugIs)
         {
-            Debug.Log($"[Ä«¸Ş¶ó Èçµé¸²] ÄŞº¸ ±â¿©: {levelFromCombo} (ÄŞº¸ {comboVal}), ½ºÅ¸ÀÏ ±â¿©: {levelFromStyle} (½ºÅ¸ÀÏ {styleVal}), ÇÕ°è: {sum}, Àû¿ë·¹º§(+1): {appliedLevel}");
+            Debug.Log($"[ì¹´ë©”ë¼ í”ë“¤ë¦¼] ì½¤ë³´ ê¸°ì—¬: {levelFromCombo} (ì½¤ë³´ {comboVal}), ìŠ¤íƒ€ì¼ ê¸°ì—¬: {levelFromStyle} (ìŠ¤íƒ€ì¼ {styleVal}), í•©ê³„: {sum}, ì ìš©ë ˆë²¨(+1): {appliedLevel}");
         }
-        // ÇÕÀÌ0ÀÌ¸é Èçµé¸² ¾øÀ½
+        // í•©ì´0ì´ë©´ í”ë“¤ë¦¼ ì—†ìŒ
         if (appliedLevel > 0)
         {
             CameraShaker.ShakeGlobal(appliedLevel);
         }
 
-        // ÇöÀç Á¡ÇÁÀÇ ÁøÇà °Å¸® ´©Àû(Àû Ã³Ä¡·Î Á¤ÁöµÈ °æ¿ì¿¡µµ ´©Àû)
+        // í˜„ì¬ ì í”„ì˜ ì§„í–‰ ê±°ë¦¬ ëˆ„ì (ì  ì²˜ì¹˜ë¡œ ì •ì§€ëœ ê²½ìš°ì—ë„ ëˆ„ì )
         if (hasLaunchStart)
         {
-            // ¿À¸¥ÂÊÀ¸·Î¸¸ ÁøÇàÇÑ´Ù°í °¡Á¤ ¡æ ¹ß»ç ÈÄ µµ´ŞÇÑ ÃÖ´ë X¸¦ ±âÁØÀ¸·Î °è»ê
+            // ì˜¤ë¥¸ìª½ìœ¼ë¡œë§Œ ì§„í–‰í•œë‹¤ê³  ê°€ì • â†’ ë°œì‚¬ í›„ ë„ë‹¬í•œ ìµœëŒ€ Xë¥¼ ê¸°ì¤€ìœ¼ë¡œ ê³„ì‚°
             launchMaxX = Mathf.Max(launchMaxX, transform.position.x);
             float dx = Mathf.Max(0f, launchMaxX - launchStartPos.x);
             cumulativeMeters += dx * GameConstants.MetersPerUnit;
@@ -604,7 +604,7 @@ public class ProtractorController : MonoBehaviour
         autoBounceCount = 0;
         if (GameConstants.DebugIs)
         {
-            Debug.Log($"[½ºÅ¸ÀÏ Ä«¿îÅÍ] Àû Ã³Ä¡·Î ÀÚµ¿ °¢µµ±â ¹Ù¿î½º Ä«¿îÆ® ÃÊ±âÈ­ (´©Àû ¹Ù¿î½º: {autoBounceCount})");
+            Debug.Log($"[ìŠ¤íƒ€ì¼ ì¹´ìš´í„°] ì  ì²˜ì¹˜ë¡œ ìë™ ê°ë„ê¸° ë°”ìš´ìŠ¤ ì¹´ìš´íŠ¸ ì´ˆê¸°í™” (ëˆ„ì  ë°”ìš´ìŠ¤: {autoBounceCount})");
         }
 
         ShowProtractor();
@@ -707,7 +707,7 @@ public class ProtractorController : MonoBehaviour
             if (hc.HP > 0)
             {
                 hc.SetHP(hc.HP - 1);
-                //HP°¡ ÁÙ¾îµå´Â »óÈ²ÀÌ¸é ÄŞº¸µµ ²÷´Â´Ù.
+                //HPê°€ ì¤„ì–´ë“œëŠ” ìƒí™©ì´ë©´ ì½¤ë³´ë„ ëŠëŠ”ë‹¤.
                 ComboController.Instance.BreakCombo(true);
             }
             if (hc.HP <= 0)
@@ -730,7 +730,7 @@ public class ProtractorController : MonoBehaviour
         launched = false; // allow input again
                           // reset auto oscillation progress for next aim
         autoBounceCount = 0;
-        //Debug.Log($"[½ºÅ¸ÀÏ Ä«¿îÅÍ] ÂøÁö·Î ÀÚµ¿ °¢µµ±â ¹Ù¿î½º Ä«¿îÆ® ÃÊ±âÈ­ (´©Àû ¹Ù¿î½º: {autoBounceCount})");
+        //Debug.Log($"[ìŠ¤íƒ€ì¼ ì¹´ìš´í„°] ì°©ì§€ë¡œ ìë™ ê°ë„ê¸° ë°”ìš´ìŠ¤ ì¹´ìš´íŠ¸ ì´ˆê¸°í™” (ëˆ„ì  ë°”ìš´ìŠ¤: {autoBounceCount})");
 
         // Show protractor again for next aim
         ShowProtractor();
@@ -766,10 +766,10 @@ public class ProtractorController : MonoBehaviour
         if (arcRenderer == null) return;
         int points = segments + 1;
         arcRenderer.positionCount = points;
-        float effRadius = radius * GameConstants.ProtractorScale; // Àû¿ëµÈ ÃÖÁ¾ ¹İÁö¸§
-                                                                  // È¦Àº ÇÁ·ÎÆ®·¢ÅÍ ½ºÄÉÀÏ°ú ÇÔ²² µ¿±âÈ­ÇÏ¿© Á÷°üÀûÀÎ ºñÀ² À¯Áö
+        float effRadius = radius * GameConstants.ProtractorScale; // ì ìš©ëœ ìµœì¢… ë°˜ì§€ë¦„
+                                                                  // í™€ì€ í”„ë¡œíŠ¸ë™í„° ìŠ¤ì¼€ì¼ê³¼ í•¨ê»˜ ë™ê¸°í™”í•˜ì—¬ ì§ê´€ì ì¸ ë¹„ìœ¨ ìœ ì§€
         float hole = Mathf.Max(0f, GameConstants.ProtractorInnerHoleRadius) * GameConstants.ProtractorScale;
-        // È¦ Å©±â°¡ ¹İÁö¸§ ÀÌ»óÀÌ¸é ÀüÃ¼ È£¸¦ ¼û±è
+        // í™€ í¬ê¸°ê°€ ë°˜ì§€ë¦„ ì´ìƒì´ë©´ ì „ì²´ í˜¸ë¥¼ ìˆ¨ê¹€
         if (hole >= effRadius - 1e-4f)
         {
             // hide arc entirely when hole covers it
@@ -820,18 +820,18 @@ public class ProtractorController : MonoBehaviour
         // Hole radius that clips the inner part (scale with protractor)
         float holeWorld = Mathf.Max(0f, GameConstants.ProtractorInnerHoleRadius) * GameConstants.ProtractorScale;
         float minVisible = Mathf.Max(0f, GameConstants.ProtractorNeedleMinVisibleLength);
-        float effRadius = radius * GameConstants.ProtractorScale; // Àû¿ëµÈ ÃÖÁ¾ ¹İÁö¸§
+        float effRadius = radius * GameConstants.ProtractorScale; // ì ìš©ëœ ìµœì¢… ë°˜ì§€ë¦„
 
-        // ÀÌÀü¿¡´Â hole >= effRadius ½Ã ¹Ù´ÃÀ» ¼û°åÀ¸³ª, ÃÖ¼Ò °¡½Ã ±æÀÌ¸¦ °­Á¦ÇÏ±â À§ÇØ Ç×»ó Ç¥½Ã
-        // ¹Ù´Ã ½ÃÀÛÁ¡Àº È¦ °æ°è ¹Û¿¡¼­ ½ÃÀÛ (holeWorld). ³Ê¹« Å©¸é È­¸é ¹ÛÀ¸·Î°¥ ¼ö ÀÖ¾î Á¦ÇÑ ¿É¼Ç¸¦ µÑ ¼ö ÀÖÀ¸³ª ÇöÀç ¿ä±¸´Â Ç×»ó º¸ÀÌµµ·Ï.
-        // ½ÃÀÛ °Å¸®: holeWorld
-        // ³¡Á¡Àº ÃÖ¼Ò °¡½Ã ±æÀÌ º¸Àå
+        // ì´ì „ì—ëŠ” hole >= effRadius ì‹œ ë°”ëŠ˜ì„ ìˆ¨ê²¼ìœ¼ë‚˜, ìµœì†Œ ê°€ì‹œ ê¸¸ì´ë¥¼ ê°•ì œí•˜ê¸° ìœ„í•´ í•­ìƒ í‘œì‹œ
+        // ë°”ëŠ˜ ì‹œì‘ì ì€ í™€ ê²½ê³„ ë°–ì—ì„œ ì‹œì‘ (holeWorld). ë„ˆë¬´ í¬ë©´ í™”ë©´ ë°–ìœ¼ë¡œê°ˆ ìˆ˜ ìˆì–´ ì œí•œ ì˜µì…˜ë¥¼ ë‘˜ ìˆ˜ ìˆìœ¼ë‚˜ í˜„ì¬ ìš”êµ¬ëŠ” í•­ìƒ ë³´ì´ë„ë¡.
+        // ì‹œì‘ ê±°ë¦¬: holeWorld
+        // ëì ì€ ìµœì†Œ ê°€ì‹œ ê¸¸ì´ ë³´ì¥
         float startDist = holeWorld;
         float endDist = startDist + minVisible;
 
-        // ½Ã°¢ÀûÀ¸·Î °úµµÇÏ°Ô ¸Ö¾îÁö´Â °ÍÀ» ¹æÁöÇÏ±â À§ÇØ »óÇÑ(È¿°ú ¹İÁö¸§ + ÃÖ¼Ò±æÀÌ) ¼±ÅÃÀû Àû¿ë
-        // effRadius°¡ holeº¸´Ù ÀÛÀº °æ¿ì¿¡µµ ¹Ù´ÃÀº hole ¹Û¿¡¼­ºÎÅÍ ¿¬ÀåµÇ¾î º¸ÀÓ
-        // ÇÊ¿ä½Ã Á¶Á¤: endDist = Mathf.Max(endDist, effRadius); (ÇöÀç´Â ¸í½ÃÀû ÃÖ¼Ò±æÀÌ ¿ì¼±)
+        // ì‹œê°ì ìœ¼ë¡œ ê³¼ë„í•˜ê²Œ ë©€ì–´ì§€ëŠ” ê²ƒì„ ë°©ì§€í•˜ê¸° ìœ„í•´ ìƒí•œ(íš¨ê³¼ ë°˜ì§€ë¦„ + ìµœì†Œê¸¸ì´) ì„ íƒì  ì ìš©
+        // effRadiusê°€ holeë³´ë‹¤ ì‘ì€ ê²½ìš°ì—ë„ ë°”ëŠ˜ì€ hole ë°–ì—ì„œë¶€í„° ì—°ì¥ë˜ì–´ ë³´ì„
+        // í•„ìš”ì‹œ ì¡°ì •: endDist = Mathf.Max(endDist, effRadius); (í˜„ì¬ëŠ” ëª…ì‹œì  ìµœì†Œê¸¸ì´ ìš°ì„ )
 
         Vector3 start = dir * startDist;
         Vector3 end = dir * endDist;
@@ -852,18 +852,18 @@ public class ProtractorController : MonoBehaviour
         if (arcRenderer != null)
         {
             var t = arcRenderer.transform;
-            t.localScale = inv; // ¹İÁö¸§ ÀÚÃ¼¿¡ ProtractorScaleÀ» Àû¿ëÇÏ¹Ç·Î ¿©±â¼­´Â ±×´ë·Î À¯Áö
+            t.localScale = inv; // ë°˜ì§€ë¦„ ìì²´ì— ProtractorScaleì„ ì ìš©í•˜ë¯€ë¡œ ì—¬ê¸°ì„œëŠ” ê·¸ëŒ€ë¡œ ìœ ì§€
             t.localRotation = rot;
             t.localPosition = new Vector3(localOffset.x * inv.x, localOffset.y * inv.y, localOffset.z * inv.z);
         }
         if (needleRenderer != null)
         {
             var t = needleRenderer.transform;
-            t.localScale = inv; // µ¿ÀÏ
+            t.localScale = inv; // ë™ì¼
             t.localRotation = rot;
             t.localPosition = new Vector3(localOffset.x * inv.x, localOffset.y * inv.y, localOffset.z * inv.z);
         }
-        // trajectoryRenderer´Â worldSpaceÀÌ¹Ç·Î ½ºÄÉÀÏ/·ÎÅ×ÀÌ¼Ç/Æ÷Áö¼ÇÀ» º¸Á¤ÇÏÁö ¾ÊÀ½
+        // trajectoryRendererëŠ” worldSpaceì´ë¯€ë¡œ ìŠ¤ì¼€ì¼/ë¡œí…Œì´ì…˜/í¬ì§€ì…˜ì„ ë³´ì •í•˜ì§€ ì•ŠìŒ
     }
 
     private float ComputeTiltDegrees()
@@ -983,12 +983,12 @@ public class ProtractorController : MonoBehaviour
         Vector2 g = Physics2D.gravity;
         int maxSeg = Mathf.Max(2, trajectorySegments);
 
-        // ÁøÇà °Å¸®¿¡ µû¸¥ ±ËÀû ±æÀÌ °¨¼Ò °è»ê
+        // ì§„í–‰ ê±°ë¦¬ì— ë”°ë¥¸ ê¶¤ì  ê¸¸ì´ ê°ì†Œ ê³„ì‚°
         float baseVisibleLen = GameConstants.TrajectoryPreviewMaxLength - GameConstants.TrajectoryPreviewSkipLength;
         float distanceFactor = Mathf.Clamp01(1f - (cumulativeMeters / 200f)); //0m =100%,200m =0%
         float desiredLen = baseVisibleLen * distanceFactor;
 
-        // ±ËÀûÀÌ ³Ê¹« ÂªÀ¸¸é Ç¥½ÃÇÏÁö ¾ÊÀ½
+        // ê¶¤ì ì´ ë„ˆë¬´ ì§§ìœ¼ë©´ í‘œì‹œí•˜ì§€ ì•ŠìŒ
         bool skipTrajectory = desiredLen < 0.01f;
         if (skipTrajectory)
         {
@@ -1127,7 +1127,7 @@ public class ProtractorController : MonoBehaviour
 
     private void UpdateDistanceDuringFlight()
     {
-        // ¿À¸¥ÂÊÀ¸·Î¸¸ ÀÌµ¿ °¡´ÉÇÑ ±¸Á¶ ¡æ ¹ß»ç ÀÌÈÄ µµ´ŞÇÑ ÃÖ´ë X¸¦ »ç¿ë
+        // ì˜¤ë¥¸ìª½ìœ¼ë¡œë§Œ ì´ë™ ê°€ëŠ¥í•œ êµ¬ì¡° â†’ ë°œì‚¬ ì´í›„ ë„ë‹¬í•œ ìµœëŒ€ Xë¥¼ ì‚¬ìš©
         launchMaxX = Mathf.Max(launchMaxX, transform.position.x);
         float dx = Mathf.Max(0f, launchMaxX - launchStartPos.x);
         float meters = cumulativeMeters + dx * GameConstants.MetersPerUnit;
@@ -1168,7 +1168,7 @@ public class ProtractorController : MonoBehaviour
             UpdateGameOverTraveledScore();
             UpdateGameOverComboScore();
             UpdateGameOverFinalScore();
-            // ÁøÇà ½Ã°£ Ç¥½Ã ¹× Á¡¼ö
+            // ì§„í–‰ ì‹œê°„ í‘œì‹œ ë° ì ìˆ˜
             UpdateGameOverRunningTime();
             UpdateGameOverRunningTimeScore();
         }
@@ -1647,7 +1647,7 @@ public class ProtractorController : MonoBehaviour
         }
     }
 
-    // NEW: °ÔÀÓ ÁøÇà ½Ã°£ Ç¥½Ã (mm:ss)
+    // NEW: ê²Œì„ ì§„í–‰ ì‹œê°„ í‘œì‹œ (mm:ss)
     private void UpdateGameOverRunningTime()
     {
         if (gameOverPanel == null) return;
@@ -1680,7 +1680,7 @@ public class ProtractorController : MonoBehaviour
         }
     }
 
-    // NEW: °ÔÀÓ ÁøÇà ½Ã°£ Á¡¼ö Ç¥½Ã (10ÃÊ´ç 1Á¡ ¡æ *100 Ç¥½Ã)
+    // NEW: ê²Œì„ ì§„í–‰ ì‹œê°„ ì ìˆ˜ í‘œì‹œ (10ì´ˆë‹¹ 1ì  â†’ *100 í‘œì‹œ)
     private void UpdateGameOverRunningTimeScore()
     {
         if (gameOverPanel == null) return;
@@ -1807,7 +1807,7 @@ public class ProtractorController : MonoBehaviour
         feverBarRect.sizeDelta = size;
     }
 
-    // UI À§ Æ÷ÀÎÅÍ/ÅÍÄ¡ ¿©ºÎ Ã¼Å©
+    // UI ìœ„ í¬ì¸í„°/í„°ì¹˜ ì—¬ë¶€ ì²´í¬
     private bool IsPointerOverUI()
     {
         var es = EventSystem.current;

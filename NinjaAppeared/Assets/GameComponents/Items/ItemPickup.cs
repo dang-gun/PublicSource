@@ -73,6 +73,13 @@ public class ItemPickup : MonoBehaviour
                     break;
                 case ItemType.Star:
                     FeverTimeModel.Instance.AddScore(itemData.ItemValue);
+                    // 피버타임 활성 중이면 시간 +10초 추가
+                    if (FeverTimeModel.Instance != null && FeverTimeModel.Instance.IsActive && GameTimerController.Instance != null)
+                    {
+                        GameTimerController.Instance.AddTime(10);
+                        if (GameConstants.DebugIs)
+                            Debug.Log($"ItemPickup: 피버타임 중 Star 획득 - 시간 +10초 => {GameTimerController.Instance.RemainingSeconds}초");
+                    }
                     if (GameConstants.DebugIs)
                         Debug.Log($"ItemPickup: Fever 점수 +{itemData.ItemValue} => {FeverTimeModel.Instance.CurrentScore}/{FeverTimeModel.MaxScore}");
                     break;
@@ -115,6 +122,19 @@ public class ItemPickup : MonoBehaviour
                 Debug.Log("ItemPickup: HealthController 없음. HP 회복 미적용.");
             return;
         }
+
+        // HP가 이미 최대치면 시간 +10초 보너스
+        if (hc.HP >= hc.MaxHP)
+        {
+            if (GameTimerController.Instance != null)
+            {
+                GameTimerController.Instance.AddTime(10);
+                if (GameConstants.DebugIs)
+                    Debug.Log($"ItemPickup: HP 최대치 - 시간 +10초 => {GameTimerController.Instance.RemainingSeconds}초");
+            }
+            return;
+        }
+
         int newHp = hc.HP + amount;
         hc.SetHP(newHp); // SetHP가 MaxHP 범위로 클램프
         if (GameConstants.DebugIs)

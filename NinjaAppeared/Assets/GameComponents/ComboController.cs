@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,10 +38,10 @@ public class ComboController : MonoBehaviour
 
     // --- New Miss Tracking ---
     /// <summary>
-    /// ¿¬¼ÓÀ¸·Î ÀûÀ» ³õÃÄ ÄŞº¸¸¦ ²÷±â À§ÇØ ÇÊ¿äÇÑ ¹Ì½º È½¼ö.
+    /// ì—°ì†ìœ¼ë¡œ ì ì„ ë†“ì³ ì½¤ë³´ë¥¼ ëŠê¸° ìœ„í•´ í•„ìš”í•œ ë¯¸ìŠ¤ íšŸìˆ˜.
     /// </summary>
-    public const int MissesToResetCombo = 2; // ¿äÃ»»çÇ×:2¸í ¿¬¼Ó ¹Ì½º ½Ã ÃÊ±âÈ­
-    private int _consecutiveMisses; // ÇöÀç ¿¬¼Ó ¹Ì½º È½¼ö
+    public const int MissesToResetCombo = 2; // ìš”ì²­ì‚¬í•­:2ëª… ì—°ì† ë¯¸ìŠ¤ ì‹œ ì´ˆê¸°í™”
+    private int _consecutiveMisses; // í˜„ì¬ ì—°ì† ë¯¸ìŠ¤ íšŸìˆ˜
 
     private void Awake()
     {
@@ -59,7 +59,7 @@ public class ComboController : MonoBehaviour
 
     public int CurrentCombo => _combo;
     public int MaxCombo => _maxCombo;
-    public int ConsecutiveMisses => _consecutiveMisses; // µğ¹ö±×/Ç¥½Ã ¿ëµµ (¼±ÅÃ »ç¿ë)
+    public int ConsecutiveMisses => _consecutiveMisses; // ë””ë²„ê·¸/í‘œì‹œ ìš©ë„ (ì„ íƒ ì‚¬ìš©)
 
     public static ComboController Ensure()
     {
@@ -70,19 +70,19 @@ public class ComboController : MonoBehaviour
 
     public void AddKill(Transform enemy)
     {
-        // Àû Ã³Ä¡ ½Ã ¹Ì½º ¿¬¼Ó Ä«¿îÅÍ ¸®¼Â
+        // ì  ì²˜ì¹˜ ì‹œ ë¯¸ìŠ¤ ì—°ì† ì¹´ìš´í„° ë¦¬ì…‹
         _consecutiveMisses = 0;
 
         _combo = Mathf.Max(0, _combo) + 1;
         _maxCombo = Mathf.Max(_maxCombo, _combo); // update maximum reached
 
-        // ÃÖ´ë ÄŞº¸°¡ 5ÀÇ ¹è¼ö¿¡ µµ´ŞÇÒ ¶§¸¶´Ù ÇÇ¹ö °ÔÀÌÁö +5
+        // ìµœëŒ€ ì½¤ë³´ê°€ 5ì˜ ë°°ìˆ˜ì— ë„ë‹¬í•  ë•Œë§ˆë‹¤ í”¼ë²„ ê²Œì´ì§€ +5
         if (_maxCombo % 5 == 0)
         {
             try { FeverTimeModel.Instance.AddScore(5); } catch { }
         }
 
-        // ÄŞº¸ ´©Àû Á¡¼ö ±ÔÄ¢: ÇöÀç ÄŞº¸°¡3 ÀÌ»óÀÏ ¶§¸¶´Ù +1
+        // ì½¤ë³´ ëˆ„ì  ì ìˆ˜ ê·œì¹™: í˜„ì¬ ì½¤ë³´ê°€3 ì´ìƒì¼ ë•Œë§ˆë‹¤ +1
         if (_combo >= 3)
         {
             try { GameStats.IncrementComboScore(); } catch { }
@@ -99,10 +99,10 @@ public class ComboController : MonoBehaviour
     }
 
     /// <summary>
-    /// ÄŞº¸¸¦ ²÷±â À§ÇØ È£Ãâ. ±âº»°ª(force=false) À¸·Î È£ÃâÇÏ¸é "¹Ì½º1È¸"·Î Ã³¸®ÇÏ°í
-    /// MissesToResetCombo(2È¸) ÀÌ»ó ¿¬¼ÓµÇ¾úÀ» ¶§ ½ÇÁ¦ ÄŞº¸¸¦0À¸·Î ÃÊ±âÈ­ÇÕ´Ï´Ù.
-    /// force=true ·Î È£ÃâÇÏ¸é Áï½Ã ÄŞº¸¿Í ¹Ì½º Ä«¿îÅÍ¸¦ ¸ğµÎ ÃÊ±âÈ­ÇÕ´Ï´Ù (°ÔÀÓ¿À¹ö µî °­Á¦ »óÈ²).
-    /// ±âÁ¸ ¿ÜºÎ È£Ãâ È£È¯À» À§ÇØ ¼±ÅÃÀû ¸Å°³º¯¼ö »ç¿ë.
+    /// ì½¤ë³´ë¥¼ ëŠê¸° ìœ„í•´ í˜¸ì¶œ. ê¸°ë³¸ê°’(force=false) ìœ¼ë¡œ í˜¸ì¶œí•˜ë©´ "ë¯¸ìŠ¤1íšŒ"ë¡œ ì²˜ë¦¬í•˜ê³ 
+    /// MissesToResetCombo(2íšŒ) ì´ìƒ ì—°ì†ë˜ì—ˆì„ ë•Œ ì‹¤ì œ ì½¤ë³´ë¥¼0ìœ¼ë¡œ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.
+    /// force=true ë¡œ í˜¸ì¶œí•˜ë©´ ì¦‰ì‹œ ì½¤ë³´ì™€ ë¯¸ìŠ¤ ì¹´ìš´í„°ë¥¼ ëª¨ë‘ ì´ˆê¸°í™”í•©ë‹ˆë‹¤ (ê²Œì„ì˜¤ë²„ ë“± ê°•ì œ ìƒí™©).
+    /// ê¸°ì¡´ ì™¸ë¶€ í˜¸ì¶œ í˜¸í™˜ì„ ìœ„í•´ ì„ íƒì  ë§¤ê°œë³€ìˆ˜ ì‚¬ìš©.
     /// </summary>
     public void BreakCombo(bool force = false)
     {
@@ -114,14 +114,14 @@ public class ComboController : MonoBehaviour
         }
 
 
-        // ¹Ì½º1È¸ ±â·Ï
+        // ë¯¸ìŠ¤1íšŒ ê¸°ë¡
         _consecutiveMisses++;
 
-        // ¹Ì½º°¡ ³ª¸é ¹«Á¶°Ç ÄŞº¸2À» ±ï´Â´Ù.
+        // ë¯¸ìŠ¤ê°€ ë‚˜ë©´ ë¬´ì¡°ê±´ ì½¤ë³´2ì„ ê¹ëŠ”ë‹¤.
         _combo = _combo - 2;
         if (0 >= _combo)
         {
-            // ÄŞº¸°¡0 ÀÌÇÏ°¡ µÇ¸é0À¸·Î °íÁ¤
+            // ì½¤ë³´ê°€0 ì´í•˜ê°€ ë˜ë©´0ìœ¼ë¡œ ê³ ì •
             _combo = 0;
         }
 
@@ -130,7 +130,7 @@ public class ComboController : MonoBehaviour
         if (_consecutiveMisses >= MissesToResetCombo)
         {
             _combo = 0;
-            _consecutiveMisses = 0; // ¸®¼Â ÈÄ Ä«¿îÅÍµµ ÃÊ±âÈ­
+            _consecutiveMisses = 0; // ë¦¬ì…‹ í›„ ì¹´ìš´í„°ë„ ì´ˆê¸°í™”
         }
 
         if (true == GameConstants.DebugIs)
@@ -142,7 +142,7 @@ public class ComboController : MonoBehaviour
     // Remove all existing combo popups (called when ninja jumps)
     public void ClearPopups()
     {
-        // º¯°æ: Á¡ÇÁ ½Ã °­Á¦ Á¦°ÅÇÏÁö ¾Ê°í, null Á¤¸®¸¸ ¼öÇàÇÏ¿© ³²°ÜµÓ´Ï´Ù.
+        // ë³€ê²½: ì í”„ ì‹œ ê°•ì œ ì œê±°í•˜ì§€ ì•Šê³ , null ì •ë¦¬ë§Œ ìˆ˜í–‰í•˜ì—¬ ë‚¨ê²¨ë‘¡ë‹ˆë‹¤.
         _activePopups.RemoveAll(p => p == null);
     }
 
@@ -404,21 +404,21 @@ public class ComboController : MonoBehaviour
 }
 
 /// <summary>
-/// Enemy ¿¬µ¿ ÆÄ±« ÄÄÆ÷³ÍÆ®: owner(Àû)°¡ DestroyµÇ¸é ÀÌ ÆË¾÷µµ ÇÔ²² Á¦°ÅÇÕ´Ï´Ù.
+/// Enemy ì—°ë™ íŒŒê´´ ì»´í¬ë„ŒíŠ¸: owner(ì )ê°€ Destroyë˜ë©´ ì´ íŒì—…ë„ í•¨ê»˜ ì œê±°í•©ë‹ˆë‹¤.
 /// </summary>
 public class DestroyWithOwner : MonoBehaviour
 {
-    [Tooltip("ÆÄ±«¸¦ ¿¬µ¿ÇÒ ¿øº»(Àû) Transform.")]
+    [Tooltip("íŒŒê´´ë¥¼ ì—°ë™í•  ì›ë³¸(ì ) Transform.")]
     public Transform owner;
 
-    [Tooltip("¿øº» ÆÄ±« ÈÄ ÆË¾÷ Á¦°Å±îÁö Áö¿¬ ½Ã°£(ÃÊ).0ÀÌ¸é Áï½Ã Á¦°Å")]
+    [Tooltip("ì›ë³¸ íŒŒê´´ í›„ íŒì—… ì œê±°ê¹Œì§€ ì§€ì—° ì‹œê°„(ì´ˆ).0ì´ë©´ ì¦‰ì‹œ ì œê±°")]
     public float delayAfterOwnerDestroyed = 0f;
 
     private bool _scheduled;
 
     void Update()
     {
-        // Unity¿¡¼­ DestroyµÈ ´ë»óÀº ÇÁ·¹ÀÓ ÀÌÈÄ null·Î Æò°¡µË´Ï´Ù.
+        // Unityì—ì„œ Destroyëœ ëŒ€ìƒì€ í”„ë ˆì„ ì´í›„ nullë¡œ í‰ê°€ë©ë‹ˆë‹¤.
         if (!_scheduled && owner == null)
         {
             _scheduled = true;

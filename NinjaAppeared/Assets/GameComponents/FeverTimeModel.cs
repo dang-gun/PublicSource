@@ -1,48 +1,48 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
 /// <summary>
-/// Fever Time »óÅÂ¿Í Á¡¼ö(°ÔÀÌÁö)¸¦ °ü¸®ÇÏ´Â ¸ğµ¨.
-/// ÃÖ´ë Á¡¼ö(°ÔÀÌÁö)°¡ 100¿¡ µµ´ŞÇÏ¸é ÇÇ¹ö Å¸ÀÓÀÌ È°¼ºÈ­µÇ°í, Áö¼Ó ½Ã°£ Á¾·á ÈÄ ÀÚµ¿ Á¾·áµË´Ï´Ù.
+/// Fever Time ìƒíƒœì™€ ì ìˆ˜(ê²Œì´ì§€)ë¥¼ ê´€ë¦¬í•˜ëŠ” ëª¨ë¸.
+/// ìµœëŒ€ ì ìˆ˜(ê²Œì´ì§€)ê°€ 100ì— ë„ë‹¬í•˜ë©´ í”¼ë²„ íƒ€ì„ì´ í™œì„±í™”ë˜ê³ , ì§€ì† ì‹œê°„ ì¢…ë£Œ í›„ ìë™ ì¢…ë£Œë©ë‹ˆë‹¤.
 /// </summary>
 public class FeverTimeModel
 {
-    /// <summary>Àü¿ª Á¢±ÙÀ» À§ÇÑ ´Ü¼ø ½Ì±ÛÅÏ ÀÎ½ºÅÏ½º.</summary>
+    /// <summary>ì „ì—­ ì ‘ê·¼ì„ ìœ„í•œ ë‹¨ìˆœ ì‹±ê¸€í„´ ì¸ìŠ¤í„´ìŠ¤.</summary>
     public static readonly FeverTimeModel Instance = new FeverTimeModel();
 
-    // ÁÖÀÇ: ProtractorController µî ´Ù¸¥ ÄÚµå¿¡¼­ 'new FeverTimeModel()'À» »ç¿ëÇÒ ¼ö ÀÖÀ¸¹Ç·Î
-    // »ı¼ºÀÚ¸¦ °ø°³·Î À¯ÁöÇÕ´Ï´Ù. °¡´ÉÇÏ¸é Àü¿ª µ¿±âÈ­¸¦ À§ÇØ Instance¸¦ »ç¿ëÇÏ¼¼¿ä.
+    // ì£¼ì˜: ProtractorController ë“± ë‹¤ë¥¸ ì½”ë“œì—ì„œ 'new FeverTimeModel()'ì„ ì‚¬ìš©í•  ìˆ˜ ìˆìœ¼ë¯€ë¡œ
+    // ìƒì„±ìë¥¼ ê³µê°œë¡œ ìœ ì§€í•©ë‹ˆë‹¤. ê°€ëŠ¥í•˜ë©´ ì „ì—­ ë™ê¸°í™”ë¥¼ ìœ„í•´ Instanceë¥¼ ì‚¬ìš©í•˜ì„¸ìš”.
     public FeverTimeModel() { }
 
-    /// <summary>ÃÖ´ë ÇÇ¹ö Á¡¼ö.</summary>
+    /// <summary>ìµœëŒ€ í”¼ë²„ ì ìˆ˜.</summary>
     public const int MaxScore = 100;
 
-    /// <summary>Å³ ´ç ±âº» Áõ°¡·®.</summary>
+    /// <summary>í‚¬ ë‹¹ ê¸°ë³¸ ì¦ê°€ëŸ‰.</summary>
     public int ScorePerKill = 1;
 
-    /// <summary>ÇÇ¹ö Å¸ÀÓ Áö¼Ó ½Ã°£(ÃÊ).</summary>
+    /// <summary>í”¼ë²„ íƒ€ì„ ì§€ì† ì‹œê°„(ì´ˆ).</summary>
     public float DurationSeconds = 6f;
 
-    /// <summary>ÇöÀç ´©Àû Á¡¼ö (0~MaxScore).</summary>
+    /// <summary>í˜„ì¬ ëˆ„ì  ì ìˆ˜ (0~MaxScore).</summary>
     public int CurrentScore { get; private set; }
 
-    /// <summary>ÇÇ¹ö Å¸ÀÓ ÁøÇà Áß ¿©ºÎ.</summary>
+    /// <summary>í”¼ë²„ íƒ€ì„ ì§„í–‰ ì¤‘ ì—¬ë¶€.</summary>
     public bool IsActive { get; private set; }
 
     private float _remain;
 
-    /// <summary>ÇÇ¹ö Å¸ÀÓ ½ÃÀÛ ½Ã È£ÃâµÇ´Â ÀÌº¥Æ®.</summary>
+    /// <summary>í”¼ë²„ íƒ€ì„ ì‹œì‘ ì‹œ í˜¸ì¶œë˜ëŠ” ì´ë²¤íŠ¸.</summary>
     public event Action OnActivated;
-    /// <summary>ÇÇ¹ö Å¸ÀÓ Á¾·á ½Ã È£ÃâµÇ´Â ÀÌº¥Æ®.</summary>
+    /// <summary>í”¼ë²„ íƒ€ì„ ì¢…ë£Œ ì‹œ í˜¸ì¶œë˜ëŠ” ì´ë²¤íŠ¸.</summary>
     public event Action OnEnded;
-    /// <summary>Á¡¼ö º¯°æ ½Ã È£Ãâ (ÇöÀçÁ¡¼ö, ÃÖ´ëÁ¡¼ö).</summary>
+    /// <summary>ì ìˆ˜ ë³€ê²½ ì‹œ í˜¸ì¶œ (í˜„ì¬ì ìˆ˜, ìµœëŒ€ì ìˆ˜).</summary>
     public event Action<int,int> OnScoreChanged;
 
-    /// <summary>Á¡¼ö¸¦ Ãß°¡ÇÕ´Ï´Ù. È°¼º ÁßÀÌ¸é ¹«½Ã(°ÔÀÌÁö °íÁ¤).</summary>
+    /// <summary>ì ìˆ˜ë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤. í™œì„± ì¤‘ì´ë©´ ë¬´ì‹œ(ê²Œì´ì§€ ê³ ì •).</summary>
     public void AddScore(int value)
     {
         if (value <= 0) return;
-        if (IsActive) return; // È°¼º Áß¿¡´Â °ÔÀÌÁö Áõ°¡ ¾øÀ½ (Á¾·á ÈÄ ´Ù½Ã Ã¤¿ò)
+        if (IsActive) return; // í™œì„± ì¤‘ì—ëŠ” ê²Œì´ì§€ ì¦ê°€ ì—†ìŒ (ì¢…ë£Œ í›„ ë‹¤ì‹œ ì±„ì›€)
         int next;
         try { next = checked(CurrentScore + value); }
         catch { next = int.MaxValue; }
@@ -56,7 +56,7 @@ public class FeverTimeModel
         //Debug.Log("[Fever] Score Added: " + value + " => " + CurrentScore + "/" + MaxScore);
     }
 
-    /// <summary>ÇÁ·¹ÀÓº° ¾÷µ¥ÀÌÆ®. FeverTime ÁøÇà ½Ã°£ °ü¸®.</summary>
+    /// <summary>í”„ë ˆì„ë³„ ì—…ë°ì´íŠ¸. FeverTime ì§„í–‰ ì‹œê°„ ê´€ë¦¬.</summary>
     public void Update(float deltaTime)
     {
         if (!IsActive) return;
@@ -73,7 +73,7 @@ public class FeverTimeModel
         IsActive = true;
         _remain = DurationSeconds;
         OnActivated?.Invoke();
-        // È°¼ºÈ­ ½Ã °¡µæ Âù »óÅÂ ¹İ¿µ (100)
+        // í™œì„±í™” ì‹œ ê°€ë“ ì°¬ ìƒíƒœ ë°˜ì˜ (100)
         OnScoreChanged?.Invoke(CurrentScore, MaxScore);
         if (GameConstants.DebugIs)
         {
@@ -85,7 +85,7 @@ public class FeverTimeModel
     {
         if (!IsActive) return;
         IsActive = false;
-        CurrentScore = 0; // Á¾·á ÈÄ °ÔÀÌÁö ¸®¼Â
+        CurrentScore = 0; // ì¢…ë£Œ í›„ ê²Œì´ì§€ ë¦¬ì…‹
         OnEnded?.Invoke();
         OnScoreChanged?.Invoke(CurrentScore, MaxScore);
         if (GameConstants.DebugIs)
@@ -95,7 +95,7 @@ public class FeverTimeModel
     }
 
     /// <summary>
-    /// »óÅÂ ÃÊ±âÈ­: ÇÇ¹ö Å¸ÀÓ Á¾·á ¹× Á¡¼ö ÃÊ±âÈ­.
+    /// ìƒíƒœ ì´ˆê¸°í™”: í”¼ë²„ íƒ€ì„ ì¢…ë£Œ ë° ì ìˆ˜ ì´ˆê¸°í™”.
     /// </summary>
     public void Reset()
     {
@@ -103,7 +103,7 @@ public class FeverTimeModel
         IsActive = false;
         _remain = 0f;
         CurrentScore = 0;
-        // ÀÌÀü¿¡ È°¼ºÈ­µÇ¾î ÀÖ¾ú´Ù¸é Á¾·á ÀÌº¥Æ® ¹ßÇà
+        // ì´ì „ì— í™œì„±í™”ë˜ì–´ ìˆì—ˆë‹¤ë©´ ì¢…ë£Œ ì´ë²¤íŠ¸ ë°œí–‰
         if (wasActive)
         {
             OnEnded?.Invoke();

@@ -1,40 +1,43 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// ³²Àº ½Ã°£À» °ü¸®ÇÏ´Â ÄÁÆ®·Ñ·¯.
-/// ±âº» 60ÃÊ¿¡¼­ ½ÃÀÛÇÏ¿© 0ÃÊ°¡ µÇ¸é HP¸¦ 1 ±ğ°í(Ã¼·ÂÀÌ ³²¾ÆÀÖÀ¸¸é) 10ÃÊ¸¦ Ãß°¡·Î ºÎ¿©ÇÏ¿© °è¼Ó ÁøÇàÇÕ´Ï´Ù.
-/// HP °¨¼Ò ÈÄ HP°¡ 0ÀÌ µÇ¸é °ÔÀÓ¿À¹ö¸¦ ½ÇÇàÇÕ´Ï´Ù.
-/// °ÔÀÓ¿À¹ö°¡ µÇ¸é ÀüÃ¼ °ÔÀÓ ½Ã°£À» Á¤Áö(Time.timeScale=0)ÇÕ´Ï´Ù.
-/// - UI °»½Å: UI ·çÆ® ÇÏÀ§¿¡¼­ ÀÌ¸§ÀÌ "TimeTxt"ÀÎ ÅØ½ºÆ®(UGUI/Text ¶Ç´Â TextMeshProUGUI)¸¦ Ã£À¸¸é ³²Àº ½Ã°£À» mm:ss Çü½ÄÀ¸·Î Ç¥½Ã.
-/// - °ÔÀÓ¿À¹ö ½ÇÇà: ¾ÀÀÇ ´ÑÀÚ¿¡ ºÙÀº ProtractorController¿¡ SendMessage("ForceGameOverDebug")·Î À§ÀÓÇÏ°Å³ª GameOverPanel È°¼ºÈ­.
+/// ë‚¨ì€ ì‹œê°„ì„ ê´€ë¦¬í•˜ëŠ” ì»¨íŠ¸ë¡¤ëŸ¬.
+/// ê¸°ë³¸ 60ì´ˆì—ì„œ ì‹œì‘í•˜ì—¬ 0ì´ˆê°€ ë˜ë©´ HPë¥¼ 1 ê¹ê³ (ì²´ë ¥ì´ ë‚¨ì•„ìˆìœ¼ë©´) 10ì´ˆë¥¼ ì¶”ê°€ë¡œ ë¶€ì—¬í•˜ì—¬ ê³„ì† ì§„í–‰í•©ë‹ˆë‹¤.
+/// HP ê°ì†Œ í›„ HPê°€ 0ì´ ë˜ë©´ ê²Œì„ì˜¤ë²„ë¥¼ ì‹¤í–‰í•©ë‹ˆë‹¤.
+/// ê²Œì„ì˜¤ë²„ê°€ ë˜ë©´ ì „ì²´ ê²Œì„ ì‹œê°„ì„ ì •ì§€(Time.timeScale=0)í•©ë‹ˆë‹¤.
+/// - UI ê°±ì‹ : UI ë£¨íŠ¸ í•˜ìœ„ì—ì„œ ì´ë¦„ì´ "TimeTxt"ì¸ í…ìŠ¤íŠ¸(UGUI/Text ë˜ëŠ” TextMeshProUGUI)ë¥¼ ì°¾ìœ¼ë©´ ë‚¨ì€ ì‹œê°„ì„ mm:ss í˜•ì‹ìœ¼ë¡œ í‘œì‹œ.
+/// - ê²Œì„ì˜¤ë²„ ì‹¤í–‰: ì”¬ì˜ ë‹Œìì— ë¶™ì€ ProtractorControllerì— SendMessage("ForceGameOverDebug")ë¡œ ìœ„ì„í•˜ê±°ë‚˜ GameOverPanel í™œì„±í™”.
 /// </summary>
 public class GameTimerController : MonoBehaviour
 {
     public static GameTimerController Instance { get; private set; }
 
-    [Tooltip("Å¸ÀÌ¸Ó ½ÃÀÛ ÃÊ(±âº» 60ÃÊ)")] public float startSeconds = 60f;
-    [Tooltip("³²Àº ½Ã°£(ÃÊ)")] public float remainingSeconds;
-    [Tooltip("(»ç¿ë¾ÈÇÔ) °ÔÀÓ¿À¹ö ½Ã Å¸ÀÓ½ºÄÉÀÏÀ» 0À¸·Î ¸ØÃâÁö ¿©ºÎ - Ç×»ó Á¤ÁöµÇ¹Ç·Î ÀÇ¹Ì ¾øÀ½")] public bool pauseTimeScaleOnGameOver = false;
+    /// <summary>
+    /// ì´ˆê¸° ì‹œê°„(ì´ˆ).
+    /// </summary>
+    private float startSeconds = GameConstants.DefaultTimerStartSeconds;
+    [Tooltip("ë‚¨ì€ ì‹œê°„(ì´ˆ)")] public float remainingSeconds;
+    [Tooltip("(ì‚¬ìš©ì•ˆí•¨) ê²Œì„ì˜¤ë²„ ì‹œ íƒ€ì„ìŠ¤ì¼€ì¼ì„ 0ìœ¼ë¡œ ë©ˆì¶œì§€ ì—¬ë¶€ - í•­ìƒ ì •ì§€ë˜ë¯€ë¡œ ì˜ë¯¸ ì—†ìŒ")] public bool pauseTimeScaleOnGameOver = false;
 
-    // ¿ÜºÎ ÂüÁ¶¿ë ÀĞ±â Àü¿ë ÇÁ·ÎÆÛÆ¼ (´ë¹®ÀÚ ÀÌ¸§ Á¢±Ù ´ëÀÀ)
+    // ì™¸ë¶€ ì°¸ì¡°ìš© ì½ê¸° ì „ìš© í”„ë¡œí¼í‹° (ëŒ€ë¬¸ì ì´ë¦„ ì ‘ê·¼ ëŒ€ì‘)
     public float RemainingSeconds => remainingSeconds;
 
-    // º°µµ·Î ´©Àû ÁøÇà ½Ã°£À» ±â·Ï (°ÔÀÓ ½ÃÀÛ~°ÔÀÓ¿À¹ö±îÁö ½ÇÁ¦ °æ°ú ½Ã°£)
+    // ë³„ë„ë¡œ ëˆ„ì  ì§„í–‰ ì‹œê°„ì„ ê¸°ë¡ (ê²Œì„ ì‹œì‘~ê²Œì„ì˜¤ë²„ê¹Œì§€ ì‹¤ì œ ê²½ê³¼ ì‹œê°„)
     private float _totalRunningSeconds;
     public float TotalRunningSeconds => _totalRunningSeconds;
 
     private bool _running;
-    private bool _gameOverTriggered; // HP°¡ 0ÀÌ µÇ¾î ½ÇÁ¦ °ÔÀÓ¿À¹ö°¡ ¹ß»ıÇß´ÂÁö ¿©ºÎ
-    private bool _handlingExpiration; // ¸¸·á Ã³¸® Áß ÀçÁøÀÔ ¹æÁö
+    private bool _gameOverTriggered; // HPê°€ 0ì´ ë˜ì–´ ì‹¤ì œ ê²Œì„ì˜¤ë²„ê°€ ë°œìƒí–ˆëŠ”ì§€ ì—¬ë¶€
+    private bool _handlingExpiration; // ë§Œë£Œ ì²˜ë¦¬ ì¤‘ ì¬ì§„ì… ë°©ì§€
 
-    // UI Ä³½Ã
+    // UI ìºì‹œ
     private GameObject _timeTxtGO;
     private Text _timeTxtUI; // uGUI Text
 
     void Awake()
     {
-        // ½Ì±ÛÅÏ º¸Àå (Áßº¹ »ı¼º ¹æÁö ¡æ Áßº¹ È£Ãâ ¹æÁö)
+        // ì‹±ê¸€í„´ ë³´ì¥ (ì¤‘ë³µ ìƒì„± ë°©ì§€ â†’ ì¤‘ë³µ í˜¸ì¶œ ë°©ì§€)
         if (Instance != null && Instance != this)
         {
             Destroy(this);
@@ -54,7 +57,7 @@ public class GameTimerController : MonoBehaviour
     {
         if (!_running || _gameOverTriggered) return;
 
-        // º°µµ ÁøÇà ½Ã°£ ´©Àû
+        // ë³„ë„ ì§„í–‰ ì‹œê°„ ëˆ„ì 
         _totalRunningSeconds += Time.deltaTime;
 
         if (remainingSeconds > 0f)
@@ -64,7 +67,7 @@ public class GameTimerController : MonoBehaviour
             RefreshTimeText();
         }
 
-        // ½Ã°£ÀÌ ´Ù µÇ¾úÀ» ¶§ Ã³¸® (°ÔÀÓ¿À¹ö°¡ ¾ÆÁ÷ ¹ß»ıÇÏÁö ¾ÊÀº °æ¿ì)
+        // ì‹œê°„ì´ ë‹¤ ë˜ì—ˆì„ ë•Œ ì²˜ë¦¬ (ê²Œì„ì˜¤ë²„ê°€ ì•„ì§ ë°œìƒí•˜ì§€ ì•Šì€ ê²½ìš°)
         if (remainingSeconds <= 0f)
         {
             HandleTimeExpired();
@@ -72,7 +75,7 @@ public class GameTimerController : MonoBehaviour
     }
 
     /// <summary>
-    /// ½Ã°£À» ÃÊ±âÈ­ÇÏ¿© ´Ù½Ã ½ÃÀÛ.
+    /// ì‹œê°„ì„ ì´ˆê¸°í™”í•˜ì—¬ ë‹¤ì‹œ ì‹œì‘.
     /// </summary>
     public void ResetTimer()
     {
@@ -82,18 +85,18 @@ public class GameTimerController : MonoBehaviour
         _handlingExpiration = false;
         _running = true;
         RefreshTimeText();
-        // °ÔÀÓ Àç½ÃÀÛ ½Ã Å¸ÀÓ½ºÄÉÀÏ º¹±¸(´Ù¸¥ °÷¿¡¼­ ÀÌ¹Ì º¹±¸ÇßÀ» ¼öµµ ÀÖÀ¸¹Ç·Î ¾ÈÀüÇÏ°Ô Ã³¸®)
+        // ê²Œì„ ì¬ì‹œì‘ ì‹œ íƒ€ì„ìŠ¤ì¼€ì¼ ë³µêµ¬(ë‹¤ë¥¸ ê³³ì—ì„œ ì´ë¯¸ ë³µêµ¬í–ˆì„ ìˆ˜ë„ ìˆìœ¼ë¯€ë¡œ ì•ˆì „í•˜ê²Œ ì²˜ë¦¬)
         if (Time.timeScale == 0f) Time.timeScale = 1f;
     }
 
     /// <summary>
-    /// ¿ÜºÎ¿¡¼­ ³²Àº ½Ã°£À» Ãß°¡ÇÕ´Ï´Ù. (Clock ¾ÆÀÌÅÛ µî)
+    /// ì™¸ë¶€ì—ì„œ ë‚¨ì€ ì‹œê°„ì„ ì¶”ê°€í•©ë‹ˆë‹¤. (Clock ì•„ì´í…œ ë“±)
     /// </summary>
-    /// <param name="seconds">Ãß°¡ÇÒ ÃÊ(¾ç¼ö).</param>
+    /// <param name="seconds">ì¶”ê°€í•  ì´ˆ(ì–‘ìˆ˜).</param>
     public void AddTime(int seconds)
     {
         if (seconds <= 0) return;
-        if (!_running || _gameOverTriggered) return; // Á¾·á »óÅÂ¸é ¹«½Ã
+        if (!_running || _gameOverTriggered) return; // ì¢…ë£Œ ìƒíƒœë©´ ë¬´ì‹œ
         remainingSeconds += seconds;
         RefreshTimeText();
 #if UNITY_EDITOR
@@ -105,12 +108,12 @@ public class GameTimerController : MonoBehaviour
     }
 
     /// <summary>
-    /// ½Ã°£ÀÌ 0ÀÌ µÇ¾úÀ» ¶§ HP¸¦ 1 °¨¼Ò ÈÄ HP°¡ ³²¾ÆÀÖÀ¸¸é 10ÃÊ ¿¬Àå, ¾Æ´Ï¸é °ÔÀÓ¿À¹ö.
-    /// FeverTime Áß HP °¨¼Ò´Â HealthController.SetHP ±ÔÄ¢¿¡ µû¶ó ¹«½ÃµÉ ¼ö ÀÖÀ½.
+    /// ì‹œê°„ì´ 0ì´ ë˜ì—ˆì„ ë•Œ HPë¥¼ 1 ê°ì†Œ í›„ HPê°€ ë‚¨ì•„ìˆìœ¼ë©´ 10ì´ˆ ì—°ì¥, ì•„ë‹ˆë©´ ê²Œì„ì˜¤ë²„.
+    /// FeverTime ì¤‘ HP ê°ì†ŒëŠ” HealthController.SetHP ê·œì¹™ì— ë”°ë¼ ë¬´ì‹œë  ìˆ˜ ìˆìŒ.
     /// </summary>
     private void HandleTimeExpired()
     {
-        // ÀÌ¹Ì °ÔÀÓ¿À¹ö ¶Ç´Â Ã³¸® ÁßÀÌ¸é ¹«½Ã
+        // ì´ë¯¸ ê²Œì„ì˜¤ë²„ ë˜ëŠ” ì²˜ë¦¬ ì¤‘ì´ë©´ ë¬´ì‹œ
         if (_gameOverTriggered || _handlingExpiration) return;
 
         _handlingExpiration = true;
@@ -119,7 +122,7 @@ public class GameTimerController : MonoBehaviour
             var hc = GetHealthControllerSafe();
             if (hc != null && hc.HP > 0)
             {
-                // HP °¨¼Ò ½Ãµµ (FeverTime ÁßÀÌ¸é ¹«½ÃµÉ ¼ö ÀÖÀ½)
+                // HP ê°ì†Œ ì‹œë„ (FeverTime ì¤‘ì´ë©´ ë¬´ì‹œë  ìˆ˜ ìˆìŒ)
                 int before = hc.HP;
                 hc.SetHP(hc.HP - 1);
                 int after = hc.HP;
@@ -128,13 +131,13 @@ public class GameTimerController : MonoBehaviour
 
                 if (after <= 0)
                 {
-                    // HP°¡ 0ÀÌ µÇ¾î °ÔÀÓ¿À¹ö
+                    // HPê°€ 0ì´ ë˜ì–´ ê²Œì„ì˜¤ë²„
                     TriggerGameOver();
                     return;
                 }
                 else
                 {
-                    // HP°¡ ³²¾Æ ÀÖÀ¸¹Ç·Î 10ÃÊ ¿¬ÀåÇÏ°í °è¼Ó ÁøÇà
+                    // HPê°€ ë‚¨ì•„ ìˆìœ¼ë¯€ë¡œ 10ì´ˆ ì—°ì¥í•˜ê³  ê³„ì† ì§„í–‰
                     remainingSeconds += 10f;
                     RefreshTimeText();
                     return;
@@ -142,13 +145,13 @@ public class GameTimerController : MonoBehaviour
             }
             else
             {
-                // HealthController°¡ ¾ø°Å³ª ÀÌ¹Ì HP°¡ 0 ¡æ Áï½Ã °ÔÀÓ¿À¹ö
+                // HealthControllerê°€ ì—†ê±°ë‚˜ ì´ë¯¸ HPê°€ 0 â†’ ì¦‰ì‹œ ê²Œì„ì˜¤ë²„
                 TriggerGameOver();
             }
         }
         finally
         {
-            // °ÔÀÓ¿À¹ö°¡ ¹ß»ıÇÏÁö ¾Ê¾Ò°í ½Ã°£À» ¿¬ÀåÇß´Ù¸é ´ÙÀ½ ÇÁ·¹ÀÓºÎÅÍ Á¤»ó ¾÷µ¥ÀÌÆ®µÇµµ·Ï ÇÃ·¡±× ÇØÁ¦
+            // ê²Œì„ì˜¤ë²„ê°€ ë°œìƒí•˜ì§€ ì•Šì•˜ê³  ì‹œê°„ì„ ì—°ì¥í–ˆë‹¤ë©´ ë‹¤ìŒ í”„ë ˆì„ë¶€í„° ì •ìƒ ì—…ë°ì´íŠ¸ë˜ë„ë¡ í”Œë˜ê·¸ í•´ì œ
             if (!_gameOverTriggered)
             {
                 _handlingExpiration = false;
@@ -161,14 +164,14 @@ public class GameTimerController : MonoBehaviour
         var uiRoot = GameObject.Find("UI");
         if (uiRoot == null) return;
 
-        // 1) Á¤È®È÷ TimeTxt ÀÌ¸§ ÀüÃ¼ Å½»ö
+        // 1) ì •í™•íˆ TimeTxt ì´ë¦„ ì „ì²´ íƒìƒ‰
         Transform target = null;
         var all = uiRoot.GetComponentsInChildren<Transform>(true);
         for (int i = 0; i < all.Length; i++)
         {
             if (all[i] != null && all[i].name == "TimeTxt") { target = all[i]; break; }
         }
-        // 2) ÀÏ¹İÀûÀ¸·Î ¿¹»ó °æ·Îµé Ãß°¡ °Ë»ö
+        // 2) ì¼ë°˜ì ìœ¼ë¡œ ì˜ˆìƒ ê²½ë¡œë“¤ ì¶”ê°€ ê²€ìƒ‰
         if (target == null)
         {
             var t = uiRoot.transform.Find("RealTimeInfo_Panel/TimePanel/TimeTxt");
@@ -192,7 +195,7 @@ public class GameTimerController : MonoBehaviour
         if (_timeTxtGO == null && _timeTxtUI == null)
         {
             TryCacheTimeTextUI();
-            if (_timeTxtGO == null && _timeTxtUI == null) return; // UI°¡ ¾ø¾îµµ ±â´ÉÀº µ¿ÀÛ
+            if (_timeTxtGO == null && _timeTxtUI == null) return; // UIê°€ ì—†ì–´ë„ ê¸°ëŠ¥ì€ ë™ì‘
         }
 
         string text = FormatTime(Mathf.CeilToInt(remainingSeconds));
@@ -201,7 +204,7 @@ public class GameTimerController : MonoBehaviour
             _timeTxtUI.text = text;
             return;
         }
-        // TextMeshProUGUI ´ëÀÀ (Á÷Á¢ ÂüÁ¶ È¸ÇÇ ÈÄ ¸®ÇÃ·º¼Ç)
+        // TextMeshProUGUI ëŒ€ì‘ (ì§ì ‘ ì°¸ì¡° íšŒí”¼ í›„ ë¦¬í”Œë ‰ì…˜)
         var tmp = _timeTxtGO.GetComponent("TextMeshProUGUI");
         if (tmp != null)
         {
@@ -226,7 +229,7 @@ public class GameTimerController : MonoBehaviour
     {
         _gameOverTriggered = true;
 
-        // ProtractorController¿¡°Ô °ÔÀÓ¿À¹ö À§ÀÓ (Á¡¼ö Áı°è Æ÷ÇÔ)
+        // ProtractorControllerì—ê²Œ ê²Œì„ì˜¤ë²„ ìœ„ì„ (ì ìˆ˜ ì§‘ê³„ í¬í•¨)
         var protractor = GetProtractorSafe();
         if (protractor != null)
         {
@@ -238,7 +241,7 @@ public class GameTimerController : MonoBehaviour
             if (panel != null) panel.SetActive(true);
         }
 
-        // Ç×»ó Å¸ÀÓ Á¤Áö
+        // í•­ìƒ íƒ€ì„ ì •ì§€
         Time.timeScale = 0f;
 
         _running = false;
@@ -295,18 +298,18 @@ public class GameTimerController : MonoBehaviour
     }
 
     /// <summary>
-    /// UI(¶Ç´Â MainScript) ·çÆ®¿¡ ÀÌ ÄÄÆ÷³ÍÆ®¸¦ º¸Àå.
+    /// UI(ë˜ëŠ” MainScript) ë£¨íŠ¸ì— ì´ ì»´í¬ë„ŒíŠ¸ë¥¼ ë³´ì¥.
     /// </summary>
     public static void EnsureOnDefaultPath()
     {
-        // ÀÌ¹Ì Á¸ÀçÇÏ¸é ±× ÀÎ½ºÅÏ½º¸¦ »ç¿ë
+        // ì´ë¯¸ ì¡´ì¬í•˜ë©´ ê·¸ ì¸ìŠ¤í„´ìŠ¤ë¥¼ ì‚¬ìš©
         if (Instance != null)
         {
             if (!Instance.enabled) Instance.enabled = true;
             return;
         }
 
-        // ¾À¿¡¼­ °Ë»öÇÏ¿© ÀÖÀ¸¸é »ç¿ë
+        // ì”¬ì—ì„œ ê²€ìƒ‰í•˜ì—¬ ìˆìœ¼ë©´ ì‚¬ìš©
 #if UNITY_2023_1_OR_NEWER
         var existing = Object.FindFirstObjectByType<GameTimerController>();
 #else
@@ -321,7 +324,7 @@ public class GameTimerController : MonoBehaviour
             return;
         }
 
-        // ¾øÀ¸¸é »ı¼º
+        // ì—†ìœ¼ë©´ ìƒì„±
         var uiRoot = GameObject.Find("UI");
         GameObject host = uiRoot != null ? uiRoot : GameObject.Find("MainScript");
         if (host == null)
@@ -331,6 +334,6 @@ public class GameTimerController : MonoBehaviour
         var timer = host.GetComponent<GameTimerController>();
         if (timer == null) timer = host.AddComponent<GameTimerController>();
         if (!timer.enabled) timer.enabled = true;
-        // Awake¿¡¼­ Instance/Reset Ã³¸® ¼öÇàµÊ
+        // Awakeì—ì„œ Instance/Reset ì²˜ë¦¬ ìˆ˜í–‰ë¨
     }
 }
